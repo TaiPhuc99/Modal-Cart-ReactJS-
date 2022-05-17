@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { DETAIL, ADD_TO_CART } from "./Reducer/Constants/const";
 
-export default class Item extends Component {
+class Item extends Component {
   render() {
     let { hinhAnh, tenSP, giaBan } = this.props.dataEachPhone;
-
+    // console.log(this.props.dataEachPhone);
     return (
       <div className="card col-12 col-lg-4 text-center">
         <div className="card-img-top">
@@ -23,17 +25,16 @@ export default class Item extends Component {
                   this.props.changeDetailPhone(this.props.dataEachPhone);
                 }}
               >
-                Detail
+                DETAIL
               </button>
               <button
                 className="btn btn-danger mx-1"
-                data-toggle="modal"
-                data-target="#exampleModal"
                 onClick={() => {
                   this.props.addItemtoModal(this.props.dataEachPhone);
+                  // console.log("yes");
                 }}
               >
-                Add to Cart
+                ADD TO CART
               </button>
             </div>
           </div>
@@ -42,3 +43,23 @@ export default class Item extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeDetailPhone: (item) => {
+      dispatch({
+        type: DETAIL,
+        payload: item,
+      });
+    },
+
+    addItemtoModal: (item) => {
+      dispatch({
+        type: ADD_TO_CART,
+        payload: item,
+      });
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Item);

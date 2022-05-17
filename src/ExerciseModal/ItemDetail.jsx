@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class ItemDetail extends Component {
+class ItemDetail extends Component {
   render() {
-    let { hinhAnh, manHinh, heDieuHanh, giaBan } = this.props.detailEachPhone;
+    let { hinhAnh, manHinh, heDieuHanh, giaBan } = this.props.detailPhone;
+    // console.log(this.props.detailPhone);
     return (
       <div className="row mt-5">
         <img
@@ -31,3 +33,9 @@ export default class ItemDetail extends Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return { detailPhone: state.item.detailPhone };
+};
+
+export default connect(mapStateToProps)(ItemDetail);

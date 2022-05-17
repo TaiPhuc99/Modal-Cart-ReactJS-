@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Item from "./Item";
+import { connect } from "react-redux";
 
-export default class ItemList extends Component {
+class ItemList extends Component {
   renderItemList = () => {
     return this.props.phoneArr.map((item) => {
       return (
@@ -17,3 +18,9 @@ export default class ItemList extends Component {
     return <div className="row p-5">{this.renderItemList()}</div>;
   }
 }
+
+let mapStateToProps = (state) => {
+  return { phoneArr: state.item.dataPhones };
+};
+
+export default connect(mapStateToProps)(ItemList);

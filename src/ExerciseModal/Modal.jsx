@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { CHANGE_QUANTITY } from "./Reducer/Constants/const";
 
 const increaseQuantiy = 1;
 const decreaseQuantiy = -1;
 
-export default class Modal extends Component {
+class Modal extends Component {
   // Render Table in Cart
   renderTableInCart = () => {
     return this.props.cart.map((item) => {
@@ -21,7 +23,7 @@ export default class Modal extends Component {
               onClick={() => {
                 this.props.changeQuantity(item.maSP, increaseQuantiy);
               }}
-              class="btn btn-success mx-2"
+              className="btn btn-success mx-2"
             >
               +
             </button>
@@ -30,7 +32,7 @@ export default class Modal extends Component {
               onClick={() => {
                 this.props.changeQuantity(item.maSP, decreaseQuantiy);
               }}
-              class="btn btn-primary mx-2"
+              className="btn btn-primary mx-2"
             >
               -
             </button>
@@ -79,7 +81,7 @@ export default class Modal extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  Modal title
+                  PRODUCT ORDER
                 </h5>
                 <button
                   type="button"
@@ -123,3 +125,21 @@ export default class Modal extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return { cart: state.item.cart };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeQuantity: (itemID, value) => {
+      dispatch({
+        type: CHANGE_QUANTITY,
+        payloadID: itemID,
+        value: value,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
